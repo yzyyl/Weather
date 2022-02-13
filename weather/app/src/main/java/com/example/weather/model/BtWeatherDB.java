@@ -65,7 +65,7 @@ public class BtWeatherDB {
                 Province province = new Province();
                 province.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 province.setProvinceName(cursor.getString(cursor.getColumnIndex("province_name")));
-                province.setProvinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
+//                province.setProvinceCode(cursor.getString(cursor.getColumnIndex("province_code")));
                 list.add(province);
             } while(cursor.moveToNext());
         }
@@ -101,7 +101,7 @@ public class BtWeatherDB {
                 City city = new City();
                 city.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 city.setCityName(cursor.getString(cursor.getColumnIndex("city_name")));
-                city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
+//                city.setCityCode(cursor.getString(cursor.getColumnIndex("city_code")));
                 city.setProvinceId(provinceId);
                 list.add(city);
             }while (cursor.moveToNext());
@@ -137,7 +137,7 @@ public class BtWeatherDB {
                 County county = new County();
                 county.setId(cursor.getInt(cursor.getColumnIndex("id")));
                 county.setCountyName(cursor.getString(cursor.getColumnIndex("county_name")));
-                county.setCountyCode(cursor.getString(cursor.getColumnIndex("county_code")));
+//                county.setCountyCode(cursor.getString(cursor.getColumnIndex("county_code")));
                 county.setCityId(cityId);
                 list.add(county);
             } while(cursor.moveToNext());

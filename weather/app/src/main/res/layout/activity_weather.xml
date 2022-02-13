@@ -16,7 +16,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
 
-            android:background="" />
+            android:background="@drawable/tu" />
 
         <TextView
             android:id="@+id/city_name"
@@ -35,7 +35,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="16dp"
 
-            android:background="" />
+            android:background="@drawable/tu" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -112,4 +112,4 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
-</>
+</LinearLayout>

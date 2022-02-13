@@ -1,9 +1,12 @@
 package com.example.weather.model;
 
-public class City {
+
+import org.litepal.crud.LitePalSupport;
+
+public class City extends LitePalSupport {
     private  int id;
     private  String cityName;
-    private String cityCode;
+    private int cityCode;
     private  int provinceId;
 
     public int getId() {
@@ -22,11 +25,11 @@ public class City {
         this.cityName = cityName;
     }
 
-    public String getCityCode() {
+    public int getCityCode() {
         return cityCode;
     }
 
-    public void setCityCode(String cityCode) {
+    public void setCityCode(int cityCode) {
         this.cityCode = cityCode;
     }
 

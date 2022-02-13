@@ -93,7 +93,7 @@ public class ChooseAreaActivity extends AppCompatActivity {
                    selectedCity = cityList.get(position);
                    queryCounties();
                } else if (currentLevel == LEVEL_COUNTY){
-                   String countyCode = countyList.get(position).getCountyCode();
+                   int countyCode = countyList.get(position).getCountyCode();
                    Intent intent = new Intent(ChooseAreaActivity.this,WeatherActivity.class);
                    intent.putExtra("county_code",countyCode);
                    startActivityForResult(intent,1);
@@ -136,7 +136,7 @@ public class ChooseAreaActivity extends AppCompatActivity {
             titleText.setText(selectedProvince.getProvinceName());
             currentLevel = LEVEL_CITY;
         } else {
-            queryFromServer(selectedProvince.getProvinceCode(),"city");
+//            queryFromServer(selectedProvince.getProvinceCode(),"city");
         }
     }
 
@@ -155,7 +155,7 @@ public class ChooseAreaActivity extends AppCompatActivity {
             titleText.setText(selectedCity.getCityName());
             currentLevel = LEVEL_COUNTY;
         } else {
-            queryFromServer(selectedCity.getCityCode(),"county");
+//            queryFromServer(selectedCity.getCityCode(),"county");
         }
     }
     /**
@@ -174,11 +174,11 @@ public class ChooseAreaActivity extends AppCompatActivity {
             public void onFinish(String response) {
                 boolean result = false;
                 if ("province".equals(type)){
-                    result = Utility.handleProvinceResponse(btWeatherDB,response);
+//                    result = Utility.handleProvinceResponse(btWeatherDB,response);
                 } else if ("city".equals(type)){
-                    result = Utility.handleCitiesResponse(btWeatherDB,response,selectedProvince.getId());
+//                    result = Utility.handleCitiesResponse(btWeatherDB,response,selectedProvince.getId());
                 } else if ("county".equals(type)){
-                    result = Utility.handleCountiesResponse(btWeatherDB,response,selectedCity.getId());
+//                    result = Utility.handleCountiesResponse(btWeatherDB,response,selectedCity.getId());
                 }
                 if (result){
                     // 通过runOnUiThread()方法回到主线程处理逻辑
