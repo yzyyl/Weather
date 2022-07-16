@@ -2,8 +2,7 @@ package com.example.weather.fragment;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.ParcelUuid;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.weather.Constant;
 import com.example.weather.R;
-import com.example.weather.adapter.PlaceAdapter;
 import com.example.weather.model.City;
 import com.example.weather.model.County;
 import com.example.weather.model.Province;
@@ -43,6 +42,7 @@ public class ChooseAreaFragment extends Fragment {
     public static final int LEVERL_COUNTY=2;
     private ProgressDialog progressDialog;
     private TextView titleText;
+    private Button button;//创建数据库按钮
     private Button backbutton;
     private ListView listView;
     private ArrayAdapter<String> adapter;
@@ -64,10 +64,18 @@ public class ChooseAreaFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-      View view=inflater.inflate(R.layout.activity_choose_area,container,false);
-        titleText=view.findViewById(R.id.title_text);
+      View view=inflater.inflate(R.layout.choose_area_frg,container,false);
+        LitePal.getDatabase();
+//      button=view.findViewById(R.id.button);
+      titleText=view.findViewById(R.id.title_text);
       backbutton=view.findViewById(R.id.back_button);
       listView=view.findViewById(R.id.list_view);
+//      button.setOnClickListener(new View.OnClickListener() {
+//          @Override
+//          public void onClick(View v) {
+//             LitePal.getDatabase();
+//          }
+//      });
       adapter=new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,dataList);
       listView.setAdapter(adapter);
       return view;
@@ -105,11 +113,11 @@ public class ChooseAreaFragment extends Fragment {
                 }
             }
         });
-       queryProvinces();
+     queryProvinces();
     }
 
     /**
-     * 查询全国所有的省，优先从数据库查询，如果没有查询到再去服务器上查询
+     * 查询全国所有的 省，优先从数据库查询，如果没有查询到再去服务器上查询
      */
     private void queryProvinces()
     {
@@ -125,8 +133,7 @@ public class ChooseAreaFragment extends Fragment {
             listView.setSelection(0);
             currentLevel = LEVEL_PROVINCE;
         } else {
-            String address="http://guolin.tech/api/china";
-            queryFromServer(address,"province");
+            queryFromServer(Constant.HOST,"province");
         }
     }
     /**
@@ -147,7 +154,7 @@ public class ChooseAreaFragment extends Fragment {
         } else {
 //            queryFromServer(selectedProvince.getProvinceCode(),"city");
             int provinceCode=selectedProvinces.getProvinceCode();
-            String address="http://guolin.tech/api/china/"+provinceCode;
+            String address=Constant.HOST+provinceCode;
             queryFromServer(address,"city");
         }
     }
@@ -171,7 +178,7 @@ public class ChooseAreaFragment extends Fragment {
         } else {
         int provinceCode=selectedProvinces.getProvinceCode();
         int cityCode=selectdeCity.getCityCode();
-        String address="http://guolin.tech/api/china/"+provinceCode+"/"+cityCode;
+        String address=Constant.HOST+provinceCode+"/"+cityCode;
         queryFromServer(address,"county");
         }
     }
@@ -181,18 +188,6 @@ public class ChooseAreaFragment extends Fragment {
     private void queryFromServer(String address ,final String type) {
         showProgressDialog();
         HttpUtil.sendOkHttpRequest(address, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                //通过runOnUiThread方法回到主线程处理逻辑
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                       closeProgressDialog();
-                        Toast.makeText(getContext(),"加载失败",Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
              String responseText=response.body().string();
@@ -226,6 +221,18 @@ public class ChooseAreaFragment extends Fragment {
                      }
                  });
              }
+            }
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("weather",e.toString());
+                //通过runOnUiThread方法回到主线程处理逻辑
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        closeProgressDialog();
+                        Toast.makeText(getContext(),"加载失败",Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 

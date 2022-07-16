@@ -3,16 +3,16 @@ package com.example.weather.model;
 import org.litepal.crud.LitePalSupport;
 
 public class Province extends LitePalSupport {
-    private int id;
+    private int province_id;
     private String provinceName;
     private int provinceCode;
 
     public int getId() {
-        return id;
+        return province_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.province_id = id;
     }
 
     public String getProvinceName() {

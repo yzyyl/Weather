@@ -26,7 +26,7 @@ public class PlaceAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return datalist.size();
+        return datalist==null ? 0 : datalist.size();
     }
 
     @Override
@@ -44,11 +44,10 @@ public class PlaceAdapter extends BaseAdapter {
         ViewHolder viewHolder=null;
         if(convertView==null)
         {
+            viewHolder=new ViewHolder();
            convertView=mInflater.inflate(android.R.layout.activity_list_item,parent,false);
-           TextView textView= convertView.findViewById(R.id.tv);
-           textView.setText(datalist.get(position));
-           viewHolder=new ViewHolder();
            viewHolder.tv=convertView.findViewById(R.id.tv);
+           viewHolder.tv.setText(datalist.get(position));
            convertView.setTag(viewHolder);
 
         }else

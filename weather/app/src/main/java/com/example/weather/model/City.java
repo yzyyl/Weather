@@ -4,17 +4,17 @@ package com.example.weather.model;
 import org.litepal.crud.LitePalSupport;
 
 public class City extends LitePalSupport {
-    private  int id;
+    private  int city_id;
     private  String cityName;
     private int cityCode;
     private  int provinceId;
 
     public int getId() {
-        return id;
+        return city_id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.city_id = id;
     }
 
     public String getCityName() {
